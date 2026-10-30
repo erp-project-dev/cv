@@ -4,7 +4,7 @@ import { useI18n } from "../i18n";
 import { Icon } from "./Icon";
 
 export function Header({ cv }: { cv: CV }) {
-  const { lang, L, t } = useI18n();
+  const { t } = useI18n();
   // First two words on one line, the rest below ("Eduardo Rodríguez" / "Patiño").
   const words = cv.name.split(" ");
   return (
@@ -25,10 +25,6 @@ export function Header({ cv }: { cv: CV }) {
           </li>
         ))}
       </ul>
-      <a className="download" href={`./cv-${lang}.pdf`} download={`Eduardo-Rodriguez-Patino-CV-${lang.toUpperCase()}.pdf`}
-        title={L.download} aria-label={L.download}>
-        <Icon name="download" size={28} />
-      </a>
     </header>
   );
 }

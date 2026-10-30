@@ -10,7 +10,6 @@ import { Stats } from "./components/Stats";
 import { Section } from "./components/Section";
 import { RichText } from "./components/RichText";
 import { JobCard } from "./components/JobCard";
-import { LastReview } from "./components/LastReview";
 
 export function App() {
   const [lang, setLang] = useLang();
@@ -18,8 +17,7 @@ export function App() {
 
   return (
     <LangProvider value={lang}>
-      <Toolbar lang={lang} onLang={setLang} />
-      <LastReview />
+      <Toolbar onLang={setLang} />
       <div className="sheet">
         <Header cv={cv} />
         <main className="content">
