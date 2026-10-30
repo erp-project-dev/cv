@@ -1,7 +1,7 @@
 // Renders the built site with headless Chromium and prints one A4 PDF per language
 // into dist/ (for deploy) and public/ (so `npm run dev` can serve them too).
 import { spawn } from "node:child_process";
-import { copyFile } from "node:fs/promises";
+import { copyFile, mkdir } from "node:fs/promises";
 import { chromium } from "playwright";
 
 const PORT = 4173;
@@ -13,6 +13,7 @@ await new Promise((resolve, reject) => {
   server.on("exit", (code) => reject(new Error(`vite preview exited (${code})`)));
 });
 
+await mkdir("public", { recursive: true });
 const browser = await chromium.launch();
 try {
   for (const lang of LANGS) {
