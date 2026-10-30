@@ -7,7 +7,8 @@ import { chromium } from "playwright";
 const PORT = 4173;
 const LANGS = ["en", "es"];
 
-const server = spawn("npx", ["vite", "preview", "--port", String(PORT), "--strictPort"], { stdio: "pipe" });
+// Run vite directly (not via npx) so killing `server` really stops the preview server.
+const server = spawn(process.execPath, ["node_modules/vite/bin/vite.js", "preview", "--port", String(PORT), "--strictPort"], { stdio: "pipe" });
 await new Promise((resolve, reject) => {
   server.stdout.on("data", (d) => d.toString().includes(String(PORT)) && resolve());
   server.on("exit", (code) => reject(new Error(`vite preview exited (${code})`)));
@@ -30,3 +31,4 @@ try {
   await browser.close();
   server.kill();
 }
+process.exit(0);
