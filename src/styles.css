@@ -1,0 +1,217 @@
+:root {
+  --bg: #2a2f37;
+  --sheet: #ffffff;
+  --text: #111827;
+  --muted: #4b5563;
+  --faint: #8b93a1;
+  --line: #e2e5ea;
+  --brand: #1f2933;        /* charcoal: header */
+  --brand-ink: #ffffff;
+  --accent: #c2410c;       /* terracotta */
+  --accent-ink: #9a3412;
+  --accent-soft: #fbeee6;
+  --band: #f3f4f6;         /* neutral tint for stats and the closing band */
+  --tag-bg: #f1f2f4;
+  --tag-text: #374151;
+  --shadow: 0 2px 4px rgb(0 0 0 / 0.15), 0 20px 48px rgb(0 0 0 / 0.35);
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  /* Type scale: every size on the sheet comes from here. */
+  --fs-body: 13.4px;   /* paragraphs, bullets, lists, row labels */
+  --fs-small: 12.4px;   /* secondary text: contact, context, stat captions */
+  --fs-mono: 11px;     /* tags and dates */
+  --fs-label: 10.4px;   /* uppercase section labels */
+  --fs-h3: 14.6px;     /* project / role titles */
+  --fs-h2: 18px;       /* company names */
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font: 400 var(--fs-body)/1.5 var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--accent-ink); }
+ul, ol { list-style: none; }
+strong { font-weight: 600; }
+.icon { flex-shrink: 0; }
+
+/* ---------- Language toolbar (hidden unless SHOW_LANG_SWITCH) ---------- */
+.toolbar { display: flex; justify-content: flex-end; gap: 4px; max-width: 794px; margin: 0 auto; padding: 14px 0 0; }
+.toolbar button {
+  height: 28px; padding: 0 10px; border: 1px solid #4b5563; border-radius: 7px;
+  background: transparent; color: #d7dce2; font: 600 12px var(--mono); cursor: pointer;
+}
+.toolbar button[aria-pressed="true"] { background: #d7dce2; color: #1f2937; }
+
+/* ---------- Last review ---------- */
+.last-review {
+  display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+  max-width: 794px; margin: 0 auto; padding: 14px 4px;
+  color: #9aa3ae; font: 500 11.5px var(--mono);
+}
+.last-review time { color: #d7dce2; }
+.last-review .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+/* ---------- Sheet ----------
+   The sheet is exactly A4 wide (794px = 210mm at 96dpi), so the page and the PDF share one layout. */
+.sheet {
+  width: 794px; max-width: 100%; margin: 0 auto 56px;
+  background: var(--sheet); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow);
+}
+
+/* ---------- Header ---------- */
+.header {
+  display: flex; align-items: center; gap: 18px;
+  padding: 28px 44px 26px;
+  background: var(--brand); color: var(--brand-ink);
+}
+.avatar {
+  flex-shrink: 0; width: 84px; height: 84px; border-radius: 18px; object-fit: cover;
+  box-shadow: 0 0 0 3px rgb(255 255 255 / 0.9);
+}
+.header-main { min-width: 0; }
+.name { font-size: 25px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.08; }
+.role { margin-top: 6px; font: 500 13px var(--mono); color: #f4a77f; }
+.prompt { color: #8a939e; }
+.contact {
+  display: grid; grid-template-columns: auto auto; gap: 6px 22px; margin-left: auto; justify-items: end;
+  color: #d5d9de; font-size: var(--fs-small);
+}
+.contact li { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.contact .icon { color: #f4a77f; }
+/* Floating download button, bottom-right: white so it stands out on the dark page background, with a gentle bounce. */
+.download {
+  position: fixed; right: 24px; bottom: 24px; z-index: 20;
+  display: grid; place-items: center; width: 56px; height: 56px;
+  border-radius: 16px; color: #1f2937; background: #ffffff;
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.35);
+  animation: bounce 2.2s ease-in-out infinite;
+}
+.download:hover { color: #1f2937; background: #ffffff; animation-play-state: paused; transform: scale(1.06); }
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-8px); }
+  45% { transform: translateY(0); }
+  52% { transform: translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce) { .download { animation: none; } }
+
+/* ---------- Core stack & more skills ---------- */
+.core-stack { display: flex; align-items: center; gap: 14px; margin-top: 16px; }
+.core-label { flex-shrink: 0; font: 700 var(--fs-label) var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-ink); }
+.core-stack .tag { padding: 3px 10px; }
+.skill-rows { display: grid; gap: 7px; }
+.skill-row { display: grid; grid-template-columns: 180px 1fr; gap: 16px; align-items: baseline; }
+.skill-row dt { font-weight: 600; }
+
+.two-col { display: grid; grid-template-columns: 1.5fr 1fr; gap: 0 40px; margin-top: 22px; }
+.two-col .section + .section { margin-top: 0; }
+.list { display: grid; gap: 6px; }
+.list li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.muted { color: var(--muted); }
+
+/* ---------- Tags ---------- */
+.tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.tag {
+  padding: 2px 8px; border-radius: 6px;
+  background: var(--tag-bg); color: var(--tag-text);
+  font: 500 var(--fs-mono)/1.5 var(--mono); white-space: nowrap;
+}
+.tag-strong { background: var(--brand); color: #ffffff; font-weight: 600; }
+
+/* ---------- Main ---------- */
+.content { --pad-x: 44px; padding: 26px var(--pad-x) 0; }
+/* Closing band: more skills, education and languages on a light brand tint, edge to edge. */
+.band { margin: 28px calc(-1 * var(--pad-x)) 0; padding: 24px var(--pad-x) 26px; background: var(--band); }
+.band .tag { background: #ffffff; }
+.section + .section { margin-top: 22px; }
+.section-title {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+  font: 700 var(--fs-label) var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-ink);
+  break-after: avoid;
+}
+.section-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.profile { max-width: 64ch; color: var(--text); }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+.stat { padding: 12px 14px; background: var(--band); border-radius: 12px; border-left: 3px solid var(--accent); }
+.stat dt { font: 700 22px/1.1 var(--mono); color: var(--accent-ink); letter-spacing: -0.03em; }
+.stat dd { margin-top: 6px; font-size: var(--fs-small); line-height: 1.4; color: var(--muted); }
+
+/* ---------- Experience ---------- */
+.job + .job { margin-top: 18px; }
+.job-head { margin-bottom: 4px; break-after: avoid; }
+/* "Globant ──────────── 2021 – Oct 2026" */
+.job-title { display: flex; align-items: center; gap: 14px; }
+.job-rule { flex: 1; height: 1px; background: var(--line); }
+.company { font-size: var(--fs-h2); font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; }
+.period { flex-shrink: 0; color: var(--faint); font: 500 var(--fs-mono) var(--mono); white-space: nowrap; }
+.job-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin-top: 2px; }
+.job-role { color: var(--accent-ink); font-weight: 500; }
+.context { color: var(--faint); font-size: var(--fs-small); }
+.job-meta .job-role + .context::before { content: "·"; margin-right: 10px; color: var(--faint); }
+.job > p { margin-top: 10px; }
+
+/* Projects inside a company: a vertical line with one dot per project. */
+.projects { position: relative; margin-top: 14px; padding-left: 22px; }
+.projects::before { content: ""; position: absolute; left: 4px; top: 14px; bottom: 14px; width: 2px; background: var(--line); }
+.projects > .project { position: relative; }
+.projects > .project::before {
+  content: ""; position: absolute; left: -22px; top: 5px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--sheet); border: 2px solid var(--accent);
+}
+.projects > .project:first-child::before { background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+.project { break-inside: auto; }
+.project-name, .project > .context, .project > p { break-after: avoid; }
+.bullets li { break-inside: avoid; }
+.project + .project, .job-head + .project { margin-top: 14px; }
+.project-name { font-size: var(--fs-h3); font-weight: 600; line-height: 1.35; break-after: avoid; }
+.project > .context { margin-top: 1px; }
+.project > p:not(.context) { margin-top: 6px; color: var(--text); }
+.role-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; break-after: avoid; }
+
+.bullets { display: grid; gap: 1px; margin-top: 5px; color: var(--muted); }
+.bullets li { position: relative; padding-left: 16px; }
+.bullets li::before {
+  content: ""; position: absolute; left: 2px; top: 0.62em;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+}
+
+.stack { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.stack-label { display: none; }
+.additional { margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--line); color: var(--muted); }
+.additional strong { color: var(--text); }
+
+/* ---------- Narrow screens: stack everything ---------- */
+@media screen and (max-width: 820px) {
+  :root { --fs-body: 14px; --fs-small: 12.8px; }
+  .last-review { padding: 12px 16px; }
+  .sheet { border-radius: 0; margin-bottom: 0; }
+  .header { flex-wrap: wrap; gap: 14px; padding: 24px 16px 18px; }
+  .avatar { width: 64px; height: 64px; border-radius: 14px; }
+  .name { font-size: 21px; }
+  .download { right: 16px; bottom: 16px; }
+  .contact { order: 3; width: 100%; margin-left: 0; grid-template-columns: 1fr; justify-items: start; }
+  .contact li { flex-direction: row-reverse; }
+  .content { --pad-x: 16px; padding: 24px var(--pad-x) 0; }
+  .stats { grid-template-columns: 1fr; }
+  .core-stack { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .skill-row, .two-col { grid-template-columns: 1fr; gap: 6px; }
+  .two-col .section + .section { margin-top: 22px; }
+}
+
+/* ---------- Print / PDF: same layout, A4, no chrome ---------- */
+@page { size: A4; margin: 0; }
+
+@media print {
+  html, body { background: var(--sheet); }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .toolbar, .download, .last-review { display: none !important; }
+  .sheet { width: auto; margin: 0; border-radius: 0; box-shadow: none; overflow: visible; }
+  /* @page has no margins (they'd print white); repeat the padding on every page instead. */
+  .content { -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .job-head { break-inside: avoid; }
+  .job { -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .job-head + * { break-before: avoid; }
+  .skill-row, .two-col { break-inside: avoid; }
+}
