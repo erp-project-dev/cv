@@ -9,7 +9,7 @@ export const cv: CV = {
   phone: "+51 980 274 560",
   email: "erodriguezp105@gmail.com",
   links: [
-    { kind: "linkedin", label: "LinkedIn", url: "https://www.linkedin.com/in/" },
+    { kind: "linkedin", label: "LinkedIn", url: "https://www.linkedin.com/in/erodriguezp105/" },
     { kind: "github", label: "Anexsoft", url: "https://github.com/Anexsoft" },
     { kind: "web", label: "CV online", url: "https://erp-project-dev.github.io/cv/" },
   ],
